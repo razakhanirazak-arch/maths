@@ -13,31 +13,38 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
-      min-height: 100vh;
+      width: 100%;
+      min-height: 100%;
       background: #000;
       color: #fff;
       font-family: Arial, sans-serif;
     }
 
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
     #particles-js {
       position: fixed;
       inset: 0;
+      background: #000;
       z-index: 0;
-      pointer-events: auto;
     }
 
     .container {
       position: relative;
       z-index: 1;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 24px;
+      align-items: center;
       text-align: center;
+      padding: 20px;
     }
 
     h1 {
@@ -52,7 +59,7 @@
       flex-wrap: wrap;
     }
 
-    button {
+    .buttons button {
       padding: 16px 30px;
       background: #fff;
       color: #000;
@@ -64,47 +71,31 @@
       transition: 0.2s;
     }
 
-    button:hover {
+    .buttons button:hover {
       background: #000;
       color: #fff;
       transform: scale(1.05);
     }
 
+    /* Full-screen website viewer */
     #viewer {
       display: none;
       position: fixed;
       inset: 0;
-      z-index: 5;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 10;
       background: #000;
-    }
-
-    #toolbar {
-      height: 52px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 14px;
-      background: #111;
-    }
-
-    #toolbar button {
-      padding: 7px 14px;
-      font-size: 14px;
-    }
-
-    #siteTitle {
-      color: white;
-      font-size: 14px;
-      flex: 1;
-      text-align: left;
     }
 
     #siteFrame {
       display: block;
       width: 100%;
-      height: calc(100% - 52px);
-      border: 0;
-      background: white;
+      height: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
     }
   </style>
 </head>
@@ -116,50 +107,40 @@
     <h1>Which one bro?</h1>
 
     <div class="buttons">
-      <button onclick="openSite('https://tungtung.my', 'Tung Tung')">
+      <button onclick="openSite('https://tungtung.my')">
         Tung Tung
       </button>
 
-      <button onclick="openSite('https://byod.cherrion.top', 'Cherri (no ads)')">
+      <button onclick="openSite('https://byod.cherrion.top')">
         Cherri (no ads)
       </button>
     </div>
   </main>
 
-  <section id="viewer">
-    <div id="toolbar">
-      <button onclick="closeSite()">← Back</button>
-      <span id="siteTitle"></span>
-    </div>
-
-    <iframe
-      id="siteFrame"
-      title="Selected website"
-      allowfullscreen>
-    </iframe>
-  </section>
+  <div id="viewer">
+    <iframe id="siteFrame" title="Website"></iframe>
+  </div>
 
   <script>
-    function openSite(url, title) {
+    function openSite(url) {
       document.getElementById('home').style.display = 'none';
       document.getElementById('particles-js').style.display = 'none';
-      document.getElementById('viewer').style.display = 'block';
-      document.getElementById('siteTitle').textContent = title;
-      document.getElementById('siteFrame').src = url;
-    }
 
-    function closeSite() {
-      document.getElementById('siteFrame').src = 'about:blank';
-      document.getElementById('viewer').style.display = 'none';
-      document.getElementById('home').style.display = 'flex';
-      document.getElementById('particles-js').style.display = 'block';
+      const viewer = document.getElementById('viewer');
+      const frame = document.getElementById('siteFrame');
+
+      viewer.style.display = 'block';
+      frame.src = url;
     }
 
     particlesJS("particles-js", {
       particles: {
         number: {
           value: 85,
-          density: { enable: true, value_area: 900 }
+          density: {
+            enable: true,
+            value_area: 900
+          }
         },
         color: { value: "#ffffff" },
         shape: { type: "circle" },
