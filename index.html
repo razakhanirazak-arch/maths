@@ -6,95 +6,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Which one bro?</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
   <style>
     * {
       box-sizing: border-box;
     }
 
-    html, body {
+    body {
       margin: 0;
-      width: 100%;
-      min-height: 100%;
       background: #000;
       color: #fff;
       font-family: Arial, sans-serif;
-    }
-
-    body {
       min-height: 100vh;
-      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
     }
 
     #particles-js {
       position: fixed;
       inset: 0;
-      background: #000;
       z-index: 0;
     }
 
-    .container {
+    .content {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
+      padding: 24px;
     }
 
     h1 {
-      font-size: clamp(2.5rem, 8vw, 4rem);
-      margin-bottom: 35px;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      margin-bottom: 30px;
     }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .buttons button {
-      padding: 16px 30px;
+    .site-button {
+      display: block;
+      width: min(280px, 80vw);
+      margin: 14px auto;
+      padding: 15px 22px;
       background: #fff;
       color: #000;
-      border: 2px solid #fff;
+      border: none;
       border-radius: 10px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
+      transition: transform 0.2s, background 0.2s;
     }
 
-    .buttons button:hover {
-      background: #000;
-      color: #fff;
+    .site-button:hover {
       transform: scale(1.05);
+      background: #ddd;
     }
 
-    #viewer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      height: 100dvh;
-      z-index: 10;
-      background: #000;
-    }
-
-    #siteFrame {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: none;
-      margin: 0;
-      padding: 0;
+    #status {
+      color: #aaa;
+      font-size: 13px;
+      min-height: 18px;
     }
   </style>
 </head>
@@ -102,55 +72,49 @@
 <body>
   <div id="particles-js"></div>
 
-  <main class="container" id="home">
+  <main class="content">
     <h1>Which one bro?</h1>
 
-    <div class="buttons">
-      <button onclick="openSite('https://tungtung.my')">
-        Tung Tung
-      </button>
+    <button class="site-button"
+      onclick="openSite('https://tungtung.my')">
+      Tung Tung
+    </button>
 
-      <button onclick="openSite('https://byod.cherrion.top')">
-        Cherri (no ads)
-      </button>
+    <button class="site-button"
+      onclick="openSite('https://byod.cherrion.top')">
+      Cherri (no ads)
+    </button>
 
-      <button onclick="openSite('https://petezahgames.com')">
-        Petezah
-      </button>
-    </div>
+    <button class="site-button"
+      onclick="openSite('https://petezahgames.com')">
+      Petezah
+    </button>
+
+    <p id="status" aria-live="polite"></p>
   </main>
 
-  <div id="viewer">
-    <iframe
-      id="siteFrame"
-      title="Selected website"
-      allowfullscreen>
-    </iframe>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <script>
-    function openSite(url) {
-      document.getElementById('home').style.display = 'none';
-      document.getElementById('particles-js').style.display = 'none';
-
-      document.getElementById('viewer').style.display = 'block';
-      document.getElementById('siteFrame').src = url;
-    }
-
+    // Animated background: exactly 89 particles
     particlesJS("particles-js", {
       particles: {
         number: {
-          value: 85,
+          value: 89,
           density: {
             enable: true,
-            value_area: 900
+            value_area: 800
           }
         },
-        color: { value: "#ffffff" },
-        shape: { type: "circle" },
+        color: {
+          value: "#ffffff"
+        },
+        shape: {
+          type: "circle"
+        },
         opacity: {
-          value: 0.65,
-          random: true
+          value: 0.5,
+          random: false
         },
         size: {
           value: 3,
@@ -165,30 +129,89 @@
         },
         move: {
           enable: true,
-          speed: 1.5,
+          speed: 2,
           direction: "none",
           random: false,
           straight: false,
-          out_mode: "out"
+          out_mode: "out",
+          bounce: false
         }
       },
       interactivity: {
         detect_on: "canvas",
         events: {
-          onhover: { enable: true, mode: "grab" },
-          onclick: { enable: true, mode: "push" },
+          onhover: {
+            enable: true,
+            mode: "grab"
+          },
+          onclick: {
+            enable: true,
+            mode: "push"
+          },
           resize: true
         },
         modes: {
           grab: {
-            distance: 160,
-            line_linked: { opacity: 0.6 }
+            distance: 140,
+            line_linked: {
+              opacity: 0.6
+            }
           },
-          push: { particles_nb: 4 }
+          push: {
+            particles_nb: 4
+          }
         }
       },
       retina_detect: true
     });
+
+    // Open a new about:blank tab and load the chosen site in an iframe.
+    
+function openSite(url) {
+  const safeUrl = new URL(url);
+
+  const allowedSites = [
+    "tungtung.my",
+    "byod.cherrion.top",
+    "petezahgames.com"
+  ];
+
+  if (
+    safeUrl.protocol !== "https:" ||
+    !allowedSites.includes(safeUrl.hostname)
+  ) {
+    return;
+  }
+
+  const newTab = window.open("about:blank", "_blank");
+
+  if (!newTab) {
+    document.getElementById("status").textContent =
+      "Pop-up blocked! Allow pop-ups and try again.";
+    return;
+  }
+
+  // Set the tab title and Dr Frost Maths favicon.
+  newTab.document.title = "Dr Frost Maths";
+
+  const favicon = newTab.document.createElement("link");
+  favicon.rel = "icon";
+  favicon.href = "https://www.drfrost.org/favicon.ico";
+  newTab.document.head.appendChild(favicon);
+
+  // Make the page full-screen.
+  newTab.document.body.style.cssText =
+    "margin:0;overflow:hidden;background:#000;";
+
+  const frame = newTab.document.createElement("iframe");
+  frame.src = safeUrl.href;
+  frame.title = "Website viewer";
+  frame.style.cssText =
+    "position:fixed;inset:0;width:100%;height:100%;" +
+    "border:0;margin:0;padding:0;background:#000;";
+
+  newTab.document.body.appendChild(frame);
+}
   </script>
 </body>
 </html>
