@@ -7,9 +7,7 @@
   <title>Which one bro?</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       width: 100%;
@@ -48,7 +46,6 @@
     .buttons {
       display: flex;
       justify-content: center;
-      align-items: center;
       flex-wrap: wrap;
       gap: 14px;
     }
@@ -62,9 +59,7 @@
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s ease,
-                  border-color 0.2s ease,
-                  transform 0.2s ease;
+      transition: background .2s, border-color .2s, transform .2s;
     }
 
     .site-button:hover {
@@ -98,12 +93,12 @@
       </button>
 
       <button class="site-button" id="petezah">
-        Petezah (unstable)
+        Petezah
       </button>
 
       <button class="site-button"
         data-url="https://s3.amazonaws.com/bullbk/index.html">
-        Fern (no ads)
+        Fern
       </button>
 
       <button class="site-button"
@@ -116,7 +111,6 @@
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <script>
-    // Exactly 89 animated background particles.
     particlesJS("particles-js", {
       particles: {
         number: {
@@ -125,14 +119,8 @@
         },
         color: { value: "#ffffff" },
         shape: { type: "circle" },
-        opacity: {
-          value: 0.55,
-          random: true
-        },
-        size: {
-          value: 3,
-          random: true
-        },
+        opacity: { value: 0.55, random: true },
+        size: { value: 3, random: true },
         line_linked: {
           enable: true,
           distance: 150,
@@ -152,14 +140,8 @@
       interactivity: {
         detect_on: "canvas",
         events: {
-          onhover: {
-            enable: true,
-            mode: "grab"
-          },
-          onclick: {
-            enable: true,
-            mode: "push"
-          },
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" },
           resize: true
         },
         modes: {
@@ -167,9 +149,7 @@
             distance: 140,
             line_linked: { opacity: 0.5 }
           },
-          push: {
-            particles_nb: 4
-          }
+          push: { particles_nb: 4 }
         }
       },
       retina_detect: true
@@ -178,22 +158,23 @@
     const faviconUrl =
       "https://favicondl.com/api/proxy?url=https%3A%2F%2Fwww.drfrost.org%2Ffavicon.svg";
 
-    function openNewTab(url) {
-      const newTab = window.open("about:blank", "_blank");
+    // Replace this with your deployed Cloudflare Worker URL.
+    const workerBase = "Https://old-union-c81c.m8mdztjkwn.workers.dev/";
 
-      if (!newTab) {
-        alert("The new tab was blocked. Please allow pop-ups and try again.");
+    function openIframeTab(url) {
+      const tab = window.open("about:blank", "_blank");
+
+      if (!tab) {
+        alert("Pop-up blocked. Allow pop-ups and try again.");
         return;
       }
 
-      const doc = newTab.document;
-
-      doc.open();
-      doc.write(`<!DOCTYPE html>
+      tab.document.open();
+      tab.document.write(`<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dr Frost Maths</title>
   <link rel="icon" type="image/svg+xml" sizes="32x32"
         href="${faviconUrl}">
@@ -202,49 +183,46 @@
       width: 100%;
       height: 100%;
       margin: 0;
-      padding: 0;
       overflow: hidden;
       background: #000;
     }
-
     iframe {
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
       border: 0;
-      display: block;
     }
   </style>
 </head>
 <body>
-  <iframe
-    src="${url}"
-    title="Website"
-    allowfullscreen>
-  </iframe>
+  <iframe src="${url}" title="Website" allowfullscreen></iframe>
 </body>
 </html>`);
-      doc.close();
+      tab.document.close();
     }
 
-    // All buttons except Petezah use a full-screen iframe.
+    // Other sites retain their existing iframe-tab behavior.
     document.querySelectorAll(".site-button[data-url]").forEach(button => {
       button.addEventListener("click", () => {
-        openNewTab(button.dataset.url);
+        openIframeTab(button.dataset.url);
       });
     });
 
-    // Petezah opens a blank tab, then redirects directly to its URL.
+    // Petezah: open a blank tab and load the allowlisted Worker URL.
     document.getElementById("petezah").addEventListener("click", () => {
-      const newTab = window.open("about:blank", "_blank");
+      const tab = window.open("about:blank", "_blank");
 
-      if (!newTab) {
-        alert("The new tab was blocked. Please allow pop-ups and try again.");
+      if (!tab) {
+        alert("Pop-up blocked. Allow pop-ups and try again.");
         return;
       }
 
-      newTab.location.replace("https://azino777-nvsa.sbs/");
+      const proxyUrl = new URL(workerBase);
+      proxyUrl.searchParams.set("site", "azino777-nvsa.sbs");
+      proxyUrl.searchParams.set("path", "/");
+
+      tab.location.replace(proxyUrl.href);
     });
   </script>
 </body>
