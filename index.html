@@ -62,10 +62,9 @@
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
+      transition: background 0.2s ease,
+                  border-color 0.2s ease,
+                  transform 0.2s ease;
     }
 
     .site-button:hover {
@@ -88,20 +87,28 @@
     <h1>Which one bro?</h1>
 
     <div class="buttons">
-      <button class="site-button" data-url="https://tungtung.my">
+      <button class="site-button"
+        data-url="https://tungtung.my">
         Tung Tung
       </button>
 
-      <button class="site-button" data-url="https://byod.cherrion.top">
+      <button class="site-button"
+        data-url="https://byod.cherrion.top">
         Cherri (no ads)
       </button>
 
-      <button class="site-button" data-url="https://azino777-nvsa.sbs/">
-        Petezah
+      <button class="site-button" id="petezah">
+        Petezah (unstable)
       </button>
 
-      <button class="site-button" data-url="https://s3.amazonaws.com/bullbk/index.html">
+      <button class="site-button"
+        data-url="https://s3.amazonaws.com/bullbk/index.html">
         Fern (no ads)
+      </button>
+
+      <button class="site-button"
+        data-url="https://provigil.site">
+        Rosin
       </button>
     </div>
   </main>
@@ -109,21 +116,15 @@
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <script>
-    // Animated background: exactly 89 particles.
+    // Exactly 89 animated background particles.
     particlesJS("particles-js", {
       particles: {
         number: {
           value: 89,
-          density: {
-            enable: false
-          }
+          density: { enable: false }
         },
-        color: {
-          value: "#ffffff"
-        },
-        shape: {
-          type: "circle"
-        },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
         opacity: {
           value: 0.55,
           random: true
@@ -164,9 +165,7 @@
         modes: {
           grab: {
             distance: 140,
-            line_linked: {
-              opacity: 0.5
-            }
+            line_linked: { opacity: 0.5 }
           },
           push: {
             particles_nb: 4
@@ -183,7 +182,7 @@
       const newTab = window.open("about:blank", "_blank");
 
       if (!newTab) {
-        alert("The new tab was blocked. Allow pop-ups for this page and try again.");
+        alert("The new tab was blocked. Please allow pop-ups and try again.");
         return;
       }
 
@@ -222,18 +221,30 @@
   <iframe
     src="${url}"
     title="Website"
-    allowfullscreen
-    referrerpolicy="no-referrer">
+    allowfullscreen>
   </iframe>
 </body>
 </html>`);
       doc.close();
     }
 
-    document.querySelectorAll(".site-button").forEach(button => {
+    // All buttons except Petezah use a full-screen iframe.
+    document.querySelectorAll(".site-button[data-url]").forEach(button => {
       button.addEventListener("click", () => {
         openNewTab(button.dataset.url);
       });
+    });
+
+    // Petezah opens a blank tab, then redirects directly to its URL.
+    document.getElementById("petezah").addEventListener("click", () => {
+      const newTab = window.open("about:blank", "_blank");
+
+      if (!newTab) {
+        alert("The new tab was blocked. Please allow pop-ups and try again.");
+        return;
+      }
+
+      newTab.location.replace("https://azino777-nvsa.sbs/");
     });
   </script>
 </body>
