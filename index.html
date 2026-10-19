@@ -75,7 +75,7 @@
     }
 
     .site-button:focus-visible {
-      outline: 2px solid white;
+      outline: 2px solid #fff;
       outline-offset: 4px;
     }
   </style>
@@ -88,19 +88,20 @@
     <h1>Which one bro?</h1>
 
     <div class="buttons">
-      <button class="site-button"
-        data-url="https://tungtung.my">
+      <button class="site-button" data-url="https://tungtung.my">
         Tung Tung
       </button>
 
-      <button class="site-button"
-        data-url="https://byod.cherrion.top">
+      <button class="site-button" data-url="https://byod.cherrion.top">
         Cherri (no ads)
       </button>
 
-      <button class="site-button"
-        data-url="https://azino777-nvsa.sbs/">
+      <button class="site-button" data-url="https://azino777-nvsa.sbs/">
         Petezah
+      </button>
+
+      <button class="site-button" data-url="https://s3.amazonaws.com/bullbk/index.html">
+        Fern
       </button>
     </div>
   </main>
@@ -108,7 +109,7 @@
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <script>
-    // Animated background with exactly 89 particles.
+    // Animated background: exactly 89 particles.
     particlesJS("particles-js", {
       particles: {
         number: {
@@ -179,7 +180,6 @@
       "https://favicondl.com/api/proxy?url=https%3A%2F%2Fwww.drfrost.org%2Ffavicon.svg";
 
     function openNewTab(url) {
-      // Open a blank tab directly from the button click.
       const newTab = window.open("about:blank", "_blank");
 
       if (!newTab) {
