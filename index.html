@@ -3,38 +3,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+  <meta name="theme-color" content="#000000">
   <title>Which one bro?</title>
 
   <style>
-    * { box-sizing: border-box; }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
+    * {
+      box-sizing: border-box;
     }
 
+    html,
     body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
       background: #000;
       color: #fff;
       font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      text-align: center;
       overflow: hidden;
     }
 
     #particles-js {
       position: fixed;
       inset: 0;
+      width: 100%;
+      height: 100%;
       z-index: 0;
     }
 
-    .container {
+    .content {
       position: relative;
       z-index: 1;
-      text-align: center;
+      width: 100%;
       padding: 24px;
     }
 
@@ -43,187 +55,255 @@
       margin: 0 0 30px;
     }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
     .site-button {
-      padding: 14px 24px;
-      color: #fff;
-      background: #171717;
-      border: 1px solid #444;
+      display: block;
+      width: min(280px, 85vw);
+      margin: 14px auto;
+      padding: 15px 22px;
+      border: none;
       border-radius: 10px;
-      font-size: 1rem;
+      background: #fff;
+      color: #000;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      transition: background .2s, border-color .2s, transform .2s;
+      transition: transform 0.2s, background 0.2s;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .site-button:hover {
-      background: #292929;
-      border-color: #fff;
-      transform: translateY(-3px);
+      transform: scale(1.04);
+      background: #ddd;
     }
 
     .site-button:focus-visible {
-      outline: 2px solid #fff;
+      outline: 3px solid #888;
       outline-offset: 4px;
     }
+
+    #status {
+      min-height: 18px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      .content {
+        padding: 18px;
+      }
+
+      h1 {
+        margin-bottom: 24px;
+      }
+
+      .site-button {
+        padding: 16px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div id="particles-js"></div>
+  <div id="particles-js" aria-hidden="true"></div>
 
-  <main class="container">
+  <main class="content">
     <h1>Which one bro?</h1>
 
-    <div class="buttons">
-      <button class="site-button"
-        data-url="https://tungtung.my">
-        Tung Tung
-      </button>
+    <button class="site-button"
+      onclick="openSite('https://tungtung.my')">
+      Tung Tung
+    </button>
 
-      <button class="site-button"
-        data-url="https://byod.cherrion.top">
-        Cherri (no ads)
-      </button>
+    <button class="site-button"
+      onclick="openSite('https://byod.cherrion.top')">
+      Cherri (no ads)
+    </button>
 
-      <button class="site-button" id="petezah">
-        Petezah
-      </button>
+    <button class="site-button"
+      onclick="openSite('https://petezahgames.com')">
+      Petezah
+    </button>
 
-      <button class="site-button"
-        data-url="https://s3.amazonaws.com/bullbk/index.html">
-        Fern
-      </button>
-
-      <button class="site-button"
-        data-url="https://provigil.site">
-        Rosin
-      </button>
-    </div>
+    <p id="status" role="status" aria-live="polite"></p>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <script>
-    particlesJS("particles-js", {
-      particles: {
-        number: {
-          value: 89,
-          density: { enable: false }
-        },
-        color: { value: "#ffffff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.55, random: true },
-        size: { value: 3, random: true },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#ffffff",
-          opacity: 0.2,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: "none",
-          random: false,
-          straight: false,
-          out_mode: "out"
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "grab" },
-          onclick: { enable: true, mode: "push" },
-          resize: true
-        },
-        modes: {
-          grab: {
-            distance: 140,
-            line_linked: { opacity: 0.5 }
+    // PARTICLES: exactly 89
+    if (window.particlesJS) {
+      particlesJS("particles-js", {
+        particles: {
+          number: {
+            value: 89,
+            density: {
+              enable: true,
+              value_area: 800
+            }
           },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
-
-    const faviconUrl =
-      "https://favicondl.com/api/proxy?url=https%3A%2F%2Fwww.drfrost.org%2Ffavicon.svg";
-
-    // Replace this with your deployed Cloudflare Worker URL.
-    const workerBase = "Https://old-union-c81c.m8mdztjkwn.workers.dev/";
-
-    function openIframeTab(url) {
-      const tab = window.open("about:blank", "_blank");
-
-      if (!tab) {
-        alert("Pop-up blocked. Allow pop-ups and try again.");
-        return;
-      }
-
-      tab.document.open();
-      tab.document.write(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dr Frost Maths</title>
-  <link rel="icon" type="image/svg+xml" sizes="32x32"
-        href="${faviconUrl}">
-  <style>
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
-      background: #000;
-    }
-    iframe {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  </style>
-</head>
-<body>
-  <iframe src="${url}" title="Website" allowfullscreen></iframe>
-</body>
-</html>`);
-      tab.document.close();
-    }
-
-    // Other sites retain their existing iframe-tab behavior.
-    document.querySelectorAll(".site-button[data-url]").forEach(button => {
-      button.addEventListener("click", () => {
-        openIframeTab(button.dataset.url);
+          color: {
+            value: "#ffffff"
+          },
+          shape: {
+            type: "circle"
+          },
+          opacity: {
+            value: 0.5,
+            random: false
+          },
+          size: {
+            value: 3,
+            random: true
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.25,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: {
+              enable: true,
+              mode: "grab"
+            },
+            onclick: {
+              enable: true,
+              mode: "push"
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 140,
+              line_linked: {
+                opacity: 0.6
+              }
+            },
+            push: {
+              particles_nb: 4
+            }
+          }
+        },
+        retina_detect: true
       });
-    });
+    }
 
-    // Petezah: open a blank tab and load the allowlisted Worker URL.
-    document.getElementById("petezah").addEventListener("click", () => {
-      const tab = window.open("about:blank", "_blank");
+    // OPEN A FULL-SCREEN IFRAME IN A NEW ABOUT:BLANK TAB
+    function openSite(url) {
+      const allowedSites = [
+        "tungtung.my",
+        "byod.cherrion.top",
+        "petezahgames.com"
+      ];
 
-      if (!tab) {
-        alert("Pop-up blocked. Allow pop-ups and try again.");
+      let target;
+
+      try {
+        target = new URL(url);
+      } catch {
         return;
       }
 
-      const proxyUrl = new URL(workerBase);
-      proxyUrl.searchParams.set("site", "azino777-nvsa.sbs");
-      proxyUrl.searchParams.set("path", "/");
+      if (
+        target.protocol !== "https:" ||
+        !allowedSites.includes(target.hostname)
+      ) {
+        return;
+      }
 
-      tab.location.replace(proxyUrl.href);
-    });
+      // Open synchronously so browsers are less likely to block the tab.
+      const newTab = window.open("about:blank", "_blank");
+
+      if (!newTab) {
+        document.getElementById("status").textContent =
+          "Pop-up blocked. Allow pop-ups for this site, then try again.";
+        return;
+      }
+
+      // Set the new tab's document title.
+      newTab.document.title = "Dr Frost Maths";
+
+      // Use the requested Dr Frost Maths favicon.
+      const favicon = newTab.document.createElement("link");
+      favicon.rel = "icon";
+      favicon.type = "image/svg+xml";
+      favicon.href =
+        "https://favicondl.com/api/proxy?url=https%3A%2F%2Fwww.drfrost.org%2Ffavicon.svg";
+
+      newTab.document.head.appendChild(favicon);
+
+      // Add mobile viewport and full-screen page styling.
+      const viewport = newTab.document.createElement("meta");
+      viewport.name = "viewport";
+      viewport.content =
+        "width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover";
+
+      newTab.document.head.appendChild(viewport);
+
+      const style = newTab.document.createElement("style");
+      style.textContent = `
+        *, *::before, *::after {
+          box-sizing: border-box;
+        }
+
+        html, body {
+          width: 100%;
+          height: 100%;
+          min-height: 100%;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          overflow: hidden;
+          background: #000;
+        }
+
+        iframe {
+          position: fixed;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 100%;
+          height: 100%;
+          width: 100vw;
+          height: 100vh;
+          height: 100dvh;
+          border: 0;
+          margin: 0;
+          padding: 0;
+          background: #000;
+        }
+
+        @supports (height: 100svh) {
+          iframe {
+            min-height: 100svh;
+          }
+        }
+      `;
+
+      newTab.document.head.appendChild(style);
+
+      // Create the full-screen iframe.
+      const frame = newTab.document.createElement("iframe");
+      frame.title = "Website viewer";
+      frame.allow = "fullscreen; autoplay; clipboard-read; clipboard-write";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.src = target.href;
+
+      newTab.document.body.appendChild(frame);
+    }
   </script>
 </body>
 </html>
